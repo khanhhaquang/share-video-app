@@ -1,5 +1,6 @@
 import { render } from '@testing-library/react';
 import Video from './index';
+import { generateToEmbed } from '@/utils/helpers';
 
 describe('UI/Video', () => {
 	const videoData = {
@@ -18,6 +19,6 @@ describe('UI/Video', () => {
 		expect(getByText(`Share by: @${videoData.shareBy}`)).toBeInTheDocument();
 		expect(getByText(`Author: ${videoData.author}`)).toBeInTheDocument();
 		expect(getByText(`Description: ${videoData.description}`)).toBeInTheDocument();
-		expect(getByTitle('video-iframe')).toHaveAttribute('src', videoData.url);
+		expect(getByTitle('video-iframe')).toHaveAttribute('src', generateToEmbed(videoData.url));
 	});
 });

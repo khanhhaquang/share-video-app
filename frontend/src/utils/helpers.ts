@@ -3,3 +3,7 @@ export function validateYoutubeURL(url: string) {
 
 	return !!url.match(regex);
 }
+
+export function generateToEmbed(url: string) {
+	return url.replace('watch?v=', 'embed/');
+}
