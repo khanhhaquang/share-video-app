@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 
 import * as Videos from '@/contexts/Videos';
-import { Videos as VideosList } from './index';
+import { Videos as VideosList } from '@/pages/index';
 import { IVideo } from '@/types/video';
 
 describe('HomePage/Videos', () => {

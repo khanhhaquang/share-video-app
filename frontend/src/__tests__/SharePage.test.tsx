@@ -1,10 +1,10 @@
 import { render, screen, fireEvent, act } from '@testing-library/react';
-import { ShareForm } from './index';
+import { ShareForm } from '@/pages/share';
 import { VideosContext } from '@/contexts/Videos';
 import { IVideo } from '@/types/video';
 import VideosService from '@/services/videos';
 
-jest.mock('../../services/videos', () => ({
+jest.mock('../services/videos', () => ({
 	share: {
 		call: jest.fn(),
 	},
