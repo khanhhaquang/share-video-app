@@ -15,7 +15,7 @@ curl -fsSL https://deno.land/x/install/install.sh | sh
 
 cd backend
 
-deno task dev
+deno run --allow-all main.ts
 ```
 
 to start Backend in `localhost:8000`
