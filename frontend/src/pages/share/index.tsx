@@ -5,13 +5,13 @@ import InnerWrapper from '@/components/PageLayout/InnerWrapper';
 import Input from '@/components/Input';
 
 import ProtectedRoute from '../ProtectedRoute';
-import Button from '@/components/Button/Button';
+import Button from '@/components/Button';
 import { IResponseError } from '@/utils/axios';
 import { useVideosContext } from '@/contexts/Videos';
 import VideosService from '@/services/videos';
 import { validateYoutubeURL } from '@/utils/helpers';
 
-const ShareForm = () => {
+export const ShareForm = () => {
 	const { setVideos, videos } = useVideosContext();
 	const [url, setUrl] = useState('');
 	const [isSubmitting, setIsSubmitting] = useState(false);

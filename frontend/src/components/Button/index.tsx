@@ -1,4 +1,4 @@
-import { EventHandler, HTMLAttributes } from 'react';
+import { HTMLAttributes } from 'react';
 import { twMerge } from 'tailwind-merge';
 
 type TProps = HTMLAttributes<HTMLButtonElement> & {

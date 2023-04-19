@@ -4,7 +4,7 @@ import Video from '@/components/Video';
 import { useVideosContext } from '@/contexts/Videos';
 import { useEffect } from 'react';
 
-const Videos = () => {
+export const Videos = () => {
 	const { videos, getVideosList } = useVideosContext();
 
 	useEffect(() => {

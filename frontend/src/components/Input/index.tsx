@@ -5,6 +5,7 @@ type TProps = HtmlHTMLAttributes<HTMLInputElement> & {
 	className?: string;
 	type?: HTMLInputTypeAttribute;
 	value?: string;
+	name?: string;
 };
 
 const Input: React.FC<TProps> = ({ className, ...rest }) => {

@@ -1,14 +1,15 @@
 import Link from 'next/link';
 import { useState } from 'react';
-import { useAuthContext } from '@/contexts/Auth';
-import UserService from '@/services/user';
-
-import Button from '../Button/Button';
-import Input from '../Input';
-import { IResponseError } from '@/utils/axios';
 import { useRouter } from 'next/router';
 
-const HeaderLogo = () => {
+import { useAuthContext } from '@/contexts/Auth';
+import UserService from '@/services/user';
+import { IResponseError } from '@/utils/axios';
+
+import Button from '../Button';
+import Input from '../Input';
+
+export const HeaderLogo = () => {
 	return (
 		<Link href='/' className='font-bold uppercase'>
 			Share video
@@ -16,7 +17,7 @@ const HeaderLogo = () => {
 	);
 };
 
-const HeaderLoggedInSection = () => {
+export const HeaderLoggedInSection = () => {
 	const router = useRouter();
 	const { username, handleLogout } = useAuthContext();
 
@@ -35,7 +36,7 @@ const HeaderLoggedInSection = () => {
 	);
 };
 
-const HeaderAuthForm = () => {
+export const HeaderAuthForm = () => {
 	const { setUserAuthInfo, isAuthenticated } = useAuthContext();
 
 	const [username, setUsername] = useState('');
@@ -104,12 +105,12 @@ const HeaderAuthForm = () => {
 
 const Header = () => {
 	return (
-		<section className='fixed z-10 inset-x-0 top-0 h-pageHeader w-screen flex items-center justify-center bg-white border-b border-black'>
+		<header className='fixed z-10 inset-x-0 top-0 h-pageHeader w-screen flex items-center justify-center bg-white border-b border-black'>
 			<div className='w-pageInner flex justify-between items-center'>
 				<HeaderLogo />
 				<HeaderAuthForm />
 			</div>
-		</section>
+		</header>
 	);
 };
 
