@@ -9,6 +9,7 @@ interface VideoSchema extends Document {
 	shareBy: string;
 	url: string;
 	title?: string;
+	author?: string;
 	description?: string;
 }
 

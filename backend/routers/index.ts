@@ -3,7 +3,10 @@ import controllers from '../controllers/index.ts';
 import middlewares from '../middlewares/index.ts';
 
 const router = new Router();
-router.post('/api/v1/user/login', controllers.userLogin).post('/api/v1/user/register', controllers.userRegister);
+router
+	.post('/api/v1/user/login', controllers.userLogin)
+	.post('/api/v1/user/register', controllers.userRegister)
+	.get('/api/v1/user/me', middlewares.authenticate, controllers.userLoggedIn);
 
 router.get('/api/v1/videos', controllers.videosGetList).post('/api/v1/videos/share', middlewares.authenticate, controllers.videosShare);
 

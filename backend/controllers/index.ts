@@ -27,7 +27,7 @@ const userLogin = async (ctx: Context) => {
 
 	const confirmPassword = await bcrypt.compare(password, exitingUser.password);
 	if (!confirmPassword) {
-		ctx.response.body = 400;
+		ctx.response.status = 400;
 		ctx.response.body = { message: 'Incorrect password' };
 		return;
 	}
@@ -42,9 +42,7 @@ const userLogin = async (ctx: Context) => {
 	if (jwt) {
 		ctx.response.status = 200;
 		ctx.response.body = {
-			accessToken: jwt,
-			userId: exitingUser.id,
-			username: exitingUser.username,
+			data: { accessToken: jwt, userId: exitingUser.id, username: exitingUser.username },
 		};
 	} else {
 		ctx.response.status = 500;
@@ -79,23 +77,51 @@ const userRegister = async (ctx: Context) => {
 	});
 
 	ctx.response.status = 201;
-	ctx.response.body = { message: 'User created', userId: newUser.id, username: newUser.username };
+	ctx.response.body = { message: 'User created', data: { userId: newUser.id, username: newUser.username } };
+};
+
+const userLoggedIn = async (ctx: Context) => {
+	const { username } = ctx.state;
+
+	const exitingUser = await Users.findOne((u) => u.username === username);
+	if (!exitingUser) {
+		ctx.response.status = 400;
+		ctx.response.body = { message: "This user hasn't been registered" };
+		return;
+	}
+
+	ctx.response.status = 200;
+	ctx.response.body = {
+		id: exitingUser.id,
+		username: exitingUser.username,
+	};
 };
 
 const videosShare = async (ctx: Context) => {
 	const { url } = await ctx.request.body().value;
 	const { username } = ctx.state;
 
-	const newVideo = await Videos.insertOne({
-		shareBy: username,
-		url,
-	});
+	try {
+		const videoDataJson = await fetch(`https://noembed.com/embed?url=${url}`);
+		const videoData = await videoDataJson.json();
 
-	ctx.response.status = 201;
-	ctx.response.body = { message: 'Video created', ...newVideo };
+		const newVideo = await Videos.insertOne({
+			shareBy: username,
+			author: videoData?.author || '',
+			title: videoData?.title || '',
+			url,
+		});
+
+		ctx.response.status = 201;
+		ctx.response.body = { message: 'Video created', data: { ...newVideo } };
+	} catch (error) {
+		ctx.response.status = 500;
+		ctx.response.body = { message: 'Server error' };
+	}
 };
 
 const videosGetList = async (ctx: Context) => {
+	const pageSize = 10;
 	const videos = await Videos.findMany((v) => !!v.url);
 
 	ctx.response.status = 200;
@@ -103,12 +129,13 @@ const videosGetList = async (ctx: Context) => {
 		data: videos
 			.sort((a, b) => {
 				if (a.createdAt && b.createdAt) {
-					return a.createdAt > b.createdAt ? -1 : 1;
+					return +new Date(b.createdAt) - +new Date(a.createdAt);
 				}
 				return 0;
 			})
-			.value(),
+			.value()
+			.slice(0, pageSize),
 	};
 };
 
-export default { userLogin, userRegister, videosShare, videosGetList };
+export default { userLoggedIn, userLogin, userRegister, videosShare, videosGetList };
