@@ -23,6 +23,7 @@ export const ShareForm = () => {
 			const data = await VideosService.share.call({ url });
 
 			if (data.data) setVideos([data.data, ...videos]);
+			alert('A new video has been shared');
 		} catch (error) {
 			alert((error as IResponseError)?.message);
 		} finally {
