@@ -40,7 +40,7 @@ export const ShareForm = () => {
 				<Input className='flex-1' value={url} type='url' id='url' onChange={(e) => setUrl((e.target as HTMLInputElement).value)} />
 			</form>
 
-			<Button disabled={isSubmitDisabled} className='w-20 p-2 mx-auto' onClick={() => handleSubmit()}>
+			<Button disabled={isSubmitDisabled} className='w-content p-2 mx-auto' onClick={() => handleSubmit()}>
 				{isSubmitting ? 'Submitting...' : 'Submit'}
 			</Button>
 		</div>

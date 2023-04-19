@@ -14,6 +14,7 @@ export const Videos = () => {
 
 	return (
 		<div className='flex flex-col w-full gap-y-2'>
+			{!videos.length && <h2 className='text-lg font-semibold'>No video has been shared</h2>}
 			{videos.map((v) => (
 				<Video data={v} key={v.id} />
 			))}
